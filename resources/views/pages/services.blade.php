@@ -39,17 +39,16 @@
 	<!-- Header section -->
 	<header class="header-section">
 		<div class="logo">
-			<img src="img/logo.png" alt=""><!-- Logo -->
+			<img src="{{asset('img/mini-'.$banniereLogoSlogan[0]->logo)}}" alt=""><!-- Logo -->
 		</div>
 		<!-- Navigation -->
 		<div class="responsive"><i class="fa fa-bars"></i></div>
 		<nav>
 			<ul class="menu-list">
-				<li><a href="home.html">Home</a></li>
-				<li class="active"><a href="services.html">Services</a></li>
-				<li><a href="blog.html">Blog</a></li>
-				<li><a href="contact.html">Contact</a></li>
-				<li><a href="elements.html">Elements</a></li>
+				<li><a href="/">{{$menu[0]->nomLien1}}</a></li>
+				<li class="active"><a href="/service">{{$menu[0]->nomLien2}}</a></li>
+				<li><a href="/blog">{{$menu[0]->nomLien3}}</a></li>
+				<li><a href="/contact">{{$menu[0]->nomLien4}}</a></li>
 			</ul>
 		</nav>
 	</header>
@@ -63,8 +62,8 @@
 			<div class="page-info">
 				<h2>Services</h2>
 				<div class="page-links">
-					<a href="#">Home</a>
-					<span>Services</span>
+					<a href="/">Home</a>
+					<span>{{$menu[0]->nomLien2}}</span>
 				</div>
 			</div>
 		</div>
@@ -76,120 +75,26 @@
 	<div class="services-section spad">
 		<div class="container">
 			<div class="section-title dark">
-				<h2>Get in <span>the Lab</span> and see the services</h2>
+			<h2>{{$startService}}<span>{{$sliceService}}</span>{{$endService}}</h2>
 			</div>
 			<div class="row">
 				<!-- single service -->
+				@foreach($service as $element)
 				<div class="col-md-4 col-sm-6">
 					<div class="service">
 						<div class="icon">
-							<i class="flaticon-023-flask"></i>
+							<i class="{{$element->iconeService}}"></i>
 						</div>
 						<div class="service-text">
-							<h2>Get in the lab</h2>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur leo est, feugiat nec elementum id, suscipit id nulla..</p>
+							<h2>{{$element->titreService}}</h2>
+							<p>{{$element->textService}}</p>
 						</div>
 					</div>
 				</div>
-				<!-- single service -->
-				<div class="col-md-4 col-sm-6">
-					<div class="service">
-						<div class="icon">
-							<i class="flaticon-011-compass"></i>
-						</div>
-						<div class="service-text">
-							<h2>Projects online</h2>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur leo est, feugiat nec elementum id, suscipit id nulla..</p>
-						</div>
-					</div>
-				</div>
-				<!-- single service -->
-				<div class="col-md-4 col-sm-6">
-					<div class="service">
-						<div class="icon">
-							<i class="flaticon-037-idea"></i>
-						</div>
-						<div class="service-text">
-							<h2>SMART MARKETING</h2>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur leo est, feugiat nec elementum id, suscipit id nulla..</p>
-						</div>
-					</div>
-				</div>
-				<!-- single service -->
-				<div class="col-md-4 col-sm-6">
-					<div class="service">
-						<div class="icon">
-							<i class="flaticon-039-vector"></i>
-						</div>
-						<div class="service-text">
-							<h2>Social Media</h2>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur leo est, feugiat nec elementum id, suscipit id nulla..</p>
-						</div>
-					</div>
-				</div>
-				<!-- single service -->
-				<div class="col-md-4 col-sm-6">
-					<div class="service">
-						<div class="icon">
-							<i class="flaticon-036-brainstorming"></i>
-						</div>
-						<div class="service-text">
-							<h2>Brainstorming</h2>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur leo est, feugiat nec elementum id, suscipit id nulla..</p>
-						</div>
-					</div>
-				</div>
-				<!-- single service -->
-				<div class="col-md-4 col-sm-6">
-					<div class="service">
-						<div class="icon">
-							<i class="flaticon-026-search"></i>
-						</div>
-						<div class="service-text">
-							<h2>Documented</h2>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur leo est, feugiat nec elementum id, suscipit id nulla..</p>
-						</div>
-					</div>
-				</div>
-				<!-- single service -->
-				<div class="col-md-4 col-sm-6">
-					<div class="service">
-						<div class="icon">
-							<i class="flaticon-018-laptop-1"></i>
-						</div>
-						<div class="service-text">
-							<h2>Responsive</h2>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur leo est, feugiat nec elementum id, suscipit id nulla..</p>
-						</div>
-					</div>
-				</div>
-				<!-- single service -->
-				<div class="col-md-4 col-sm-6">
-					<div class="service">
-						<div class="icon">
-							<i class="flaticon-043-sketch"></i>
-						</div>
-						<div class="service-text">
-							<h2>Retina ready</h2>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur leo est, feugiat nec elementum id, suscipit id nulla..</p>
-						</div>
-					</div>
-				</div>
-				<!-- single service -->
-				<div class="col-md-4 col-sm-6">
-					<div class="service">
-						<div class="icon">
-							<i class="flaticon-012-cube"></i>
-						</div>
-						<div class="service-text">
-							<h2>Ultra modern</h2>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur leo est, feugiat nec elementum id, suscipit id nulla..</p>
-						</div>
-					</div>
-				</div>
+				@endforeach
 			</div>
 			<div class="text-center">
-				<a href="" class="site-btn">Browse</a>
+				<a href="#servicePrimé" class="site-btn">{{$serviceTitre[0]->nomBtn}}</a>
 			</div>
 		</div>
 	</div>
@@ -197,44 +102,26 @@
 
 
 	<!-- features section -->
-	<div class="team-section spad">
+	<div class="team-section spad" id='servicePrimé'>
 		<div class="overlay"></div>
 		<div class="container">
 			<div class="section-title">
-				<h2>Get in <span>the Lab</span> and  discover the world</h2>
+				<h2>{{$startServicePrime}}<span>{{$sliceServicePrime}}</span>{{$endServicePrime}}</h2>
 			</div>
 			<div class="row">
-				<!-- feature item -->
 				<div class="col-md-4 col-sm-4 features">
-					<div class="icon-box light left">
-						<div class="service-text">
-							<h2>Get in the lab</h2>
-							<p>Lorem ipsum dolor sit amet, consectetur ad ipiscing elit. Curabitur leo est, feugiat nec</p>
-						</div>
-						<div class="icon">
-							<i class="flaticon-002-caliper"></i>
-						</div>
-					</div>
 					<!-- feature item -->
+					@foreach($servicePrime1 as $element)
 					<div class="icon-box light left">
 						<div class="service-text">
-							<h2>Projects online</h2>
-							<p>Lorem ipsum dolor sit amet, consectetur ad ipiscing elit. Curabitur leo est, feugiat nec</p>
+							<h2>{{$element->titreService}}</h2>
+							<p>{{$element->textService}}</p>
 						</div>
 						<div class="icon">
-							<i class="flaticon-019-coffee-cup"></i>
+							<i class="{{$element->iconeService}}"></i>
 						</div>
 					</div>
-					<!-- feature item -->
-					<div class="icon-box light left">
-						<div class="service-text">
-							<h2>SMART MARKETING</h2>
-							<p>Lorem ipsum dolor sit amet, consectetur ad ipiscing elit. Curabitur leo est, feugiat nec</p>
-						</div>
-						<div class="icon">
-							<i class="flaticon-020-creativity"></i>
-						</div>
-					</div>
+					@endforeach
 				</div>
 				<!-- Devices -->
 				<div class="col-md-4 col-sm-4 devices">
@@ -242,41 +129,23 @@
 						<img src="img/device.png" alt="">
 					</div>
 				</div>
-				<!-- feature item -->
 				<div class="col-md-4 col-sm-4 features">
-					<div class="icon-box light">
-						<div class="icon">
-							<i class="flaticon-037-idea"></i>
-						</div>
-						<div class="service-text">
-							<h2>Get in the lab</h2>
-							<p>Lorem ipsum dolor sit amet, consectetur ad ipiscing elit. Curabitur leo est, feugiat nec</p>
-						</div>
-					</div>
 					<!-- feature item -->
+					@foreach($servicePrime2 as $element)
 					<div class="icon-box light">
 						<div class="icon">
-							<i class="flaticon-025-imagination"></i>
+							<i class="{{$element->iconeService}}"></i>
 						</div>
 						<div class="service-text">
-							<h2>Projects online</h2>
-							<p>Lorem ipsum dolor sit amet, consectetur ad ipiscing elit. Curabitur leo est, feugiat nec</p>
+							<h2>{{$element->titreService}}</h2>
+							<p>{{$element->textService}}</p>
 						</div>
 					</div>
-					<!-- feature item -->
-					<div class="icon-box light">
-						<div class="icon">
-							<i class="flaticon-008-team"></i>
-						</div>
-						<div class="service-text">
-							<h2>SMART MARKETING</h2>
-							<p>Lorem ipsum dolor sit amet, consectetur ad ipiscing elit. Curabitur leo est, feugiat nec</p>
-						</div>
-					</div>
+					@endforeach
 				</div>
 			</div>
 			<div class="text-center mt100">
-				<a href="" class="site-btn">Browse</a>
+				<a href="" class="site-btn">{{$servicePrime[0]->btnServicePrime}}</a>
 			</div>
 		</div>
 	</div>
@@ -356,28 +225,37 @@
 				<!-- contact info -->
 				<div class="col-md-5 col-md-offset-1 contact-info col-push">
 					<div class="section-title left">
-						<h2>Contact us</h2>
+					<h2>{{$contact[0]->titreContact}}</h2>
 					</div>
-					<p>Cras ex mauris, ornare eget pretium sit amet, dignissim et turpis. Nunc nec maximus dui, vel suscipit dolor. Donec elementum velit a orci facilisis rutrum. </p>
-					<h3 class="mt60">Main Office</h3>
-					<p class="con-item">C/ Libertad, 34 <br> 05200 Arévalo </p>
-					<p class="con-item">0034 37483 2445 322</p>
-					<p class="con-item">hello@company.com</p>
+					<p>{{$contact[0]->textContact}}</p>
+					<h3 class="mt60">{{$contact[0]->sousTitreContact}}</h3>
+					<p class="con-item">{{$contact[0]->rueContact}} <br> {{$contact[0]->codePostalContact}} </p>
+					<p class="con-item">{{$contact[0]->telContact}}</p>
+					<p class="con-item">{{$contact[0]->emailContact}}</p>
 				</div>
 				<!-- contact form -->
 				<div class="col-md-6 col-pull">
-					<form class="form-class" id="con_form">
+					<form class="form-class" id="con_form" action='/mailHome' method='POST'>
+					@csrf
 						<div class="row">
 							<div class="col-sm-6">
+							@if(Auth::check() == false)
 								<input type="text" name="name" placeholder="Your name">
+							@elseif(Auth::check())
+								<input type="text" name="name" value='{{auth::user()->name}}'>
+							@endif
 							</div>
 							<div class="col-sm-6">
+							@if(Auth::check() == false)
 								<input type="text" name="email" placeholder="Your email">
+							@elseif(Auth::check())
+								<input type="text" name="email" value='{{auth::user()->email}}'>
+							@endif
 							</div>
 							<div class="col-sm-12">
 								<input type="text" name="subject" placeholder="Subject">
 								<textarea name="message" placeholder="Message"></textarea>
-								<button class="site-btn">send</button>
+								<button class="site-btn">{{$contact[0]->btnContact}}</button>
 							</div>
 						</div>
 					</form>

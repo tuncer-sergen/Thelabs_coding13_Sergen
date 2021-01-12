@@ -73,7 +73,9 @@ class VideoController extends Controller
     public function update($id,Request $request)
     {
         $newEntry = Video::find($id);
+        if($newEntry->imageVideo != 'video.jpg'){
         Storage::disk('public')->delete('img/'.$newEntry->imageVideo);
+        }
         $newEntry->imageVideo = $request->file('imageVideo')->hashName();
         $newEntry->srcVideo = $request->srcVideo;
         $newEntry->save();

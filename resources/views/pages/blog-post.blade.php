@@ -39,17 +39,16 @@
 	<!-- Header section -->
 	<header class="header-section">
 		<div class="logo">
-			<img src="img/logo.png" alt=""><!-- Logo -->
+		<img src="{{asset('img/mini-'.$banniereLogoSlogan[0]->logo)}}" alt=""><!-- Logo -->
 		</div>
 		<!-- Navigation -->
 		<div class="responsive"><i class="fa fa-bars"></i></div>
 		<nav>
 			<ul class="menu-list">
-				<li><a href="home.html">Home</a></li>
-				<li><a href="services.html">Services</a></li>
-				<li class="active"><a href="blog.html">Blog</a></li>
-				<li><a href="contact.html">Contact</a></li>
-				<li><a href="elements.html">Elements</a></li>
+				<li><a href="/">{{$menu[0]->nomLien1}}</a></li>
+				<li><a href="/service">{{$menu[0]->nomLien2}}</a></li>
+				<li class="active"><a href="/blog">{{$menu[0]->nomLien3}}</a></li>
+				<li><a href="/contact">{{$menu[0]->nomLien4}}</a></li>
 			</ul>
 		</nav>
 	</header>
@@ -63,8 +62,8 @@
 			<div class="page-info">
 				<h2>Blog</h2>
 				<div class="page-links">
-					<a href="#">Home</a>
-					<span>Blog</span>
+					<a href="/">Home</a>
+					<span>{{$menu[0]->nomLien3}}</span>
 				</div>
 			</div>
 		</div>
@@ -177,18 +176,6 @@
 					</div>
 					<!-- Single widget -->
 					<div class="widget-item">
-						<h2 class="widget-title">Instagram</h2>
-						<ul class="instagram">
-							<li><img src="img/instagram/1.jpg" alt=""></li>
-							<li><img src="img/instagram/2.jpg" alt=""></li>
-							<li><img src="img/instagram/3.jpg" alt=""></li>
-							<li><img src="img/instagram/4.jpg" alt=""></li>
-							<li><img src="img/instagram/5.jpg" alt=""></li>
-							<li><img src="img/instagram/6.jpg" alt=""></li>
-						</ul>
-					</div>
-					<!-- Single widget -->
-					<div class="widget-item">
 						<h2 class="widget-title">Tags</h2>
 						<ul class="tag">
 							<li><a href="">branding</a></li>
@@ -199,21 +186,6 @@
 							<li><a href="">web design</a></li>
 							<li><a href="">photography</a></li>
 						</ul>
-					</div>
-					<!-- Single widget -->
-					<div class="widget-item">
-						<h2 class="widget-title">Quote</h2>
-						<div class="quote">
-							<span class="quotation">‘​‌‘​‌</span>
-							<p>Vivamus in urna eu enim porttitor consequat. Proin vitae pulvinar libero. Proin ut hendrerit metus. Aliquam erat volutpat. Donec fermen tum convallis ante eget tristique. Sed lacinia turpis at ultricies vestibulum.</p>
-						</div>
-					</div>
-					<!-- Single widget -->
-					<div class="widget-item">
-						<h2 class="widget-title">Add</h2>
-						<div class="add">
-							<a href=""><img src="img/add.jpg" alt=""></a>
-						</div>
 					</div>
 				</div>
 			</div>

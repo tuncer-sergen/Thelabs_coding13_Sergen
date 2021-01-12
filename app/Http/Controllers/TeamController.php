@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Team;
 use App\Models\TeamTitre;
+use App\Models\ChoixTeam;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -83,7 +84,9 @@ class TeamController extends Controller
     public function update($id,Request $request)
     {
         $update = Team::find($id);
+        if($update->imageTeam != '1.jpg' && $update->imageTeam != '2.jpg' && $update->imageTeam != '3.jpg'){
         Storage::disk('public')->delete('img/team/'.$update->imageTeam);
+        }
         $update->imageTeam = $request->file('imageTeam')->hashName();
         $update->nomTeam = $request->nomTeam;
         $update->prenomTeam = $request->prenomTeam;
@@ -104,6 +107,14 @@ class TeamController extends Controller
         $newDelete = Team::find($id);
         $newDelete->delete();
         Storage::disk('public')->delete('img/team/'.$newDelete->imageTeam);
+        return redirect()->back();
+    }
+    public function choix(Request $request){
+        $choixDelete = ChoixTeam::all();
+        $choixDelete[0]->delete();
+        $choix = new ChoixTeam;
+        $choix->choix_id = $request->choix_id;
+        $choix->save();
         return redirect()->back();
     }
 }

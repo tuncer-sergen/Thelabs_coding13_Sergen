@@ -35,8 +35,20 @@
         </div>
     </form>
     <hr>
-    <h2><u>les commentaires</u> :</h2>
-    
+    <h2><u>choix membre principal</u> :</h2>
+    <form action="/choix" method="post">
+    @csrf
+    <select name="choix_id">
+    @foreach($datas as $element)
+        <option value="{{$element->id}}">{{$element->nomTeam}}</option>
+    @endforeach
+    </select>
+    <div>
+        <button type="submit" class='btn bg-orange mt-3'>Choisir</button>
+    </div>
+    </form>
+    <hr>
+    <h2><u>les membres</u> :</h2>
     @foreach($datas as $element)
     <form action="/team/{{$element->id}}/edit" method="get">
     @csrf

@@ -39,17 +39,16 @@
 	<!-- Header section -->
 	<header class="header-section">
 		<div class="logo">
-			<img src="img/logo.png" alt=""><!-- Logo -->
+		<img src="{{asset('img/mini-'.$banniereLogoSlogan[0]->logo)}}" alt=""><!-- Logo -->
 		</div>
 		<!-- Navigation -->
 		<div class="responsive"><i class="fa fa-bars"></i></div>
 		<nav>
 			<ul class="menu-list">
-				<li><a href="home.html">Home</a></li>
-				<li><a href="services.html">Services</a></li>
-				<li><a href="blog.html">Blog</a></li>
-				<li class="active"><a href="contact.html">Contact</a></li>
-				<li><a href="elements.html">Elements</a></li>
+				<li><a href="/">{{$menu[0]->nomLien1}}</a></li>
+				<li><a href="/service">{{$menu[0]->nomLien2}}</a></li>
+				<li><a href="/blog">{{$menu[0]->nomLien3}}</a></li>
+				<li class="active"><a href="#">{{$menu[0]->nomLien4}}</a></li>
 			</ul>
 		</nav>
 	</header>
@@ -63,8 +62,8 @@
 			<div class="page-info">
 				<h2>Contact</h2>
 				<div class="page-links">
-					<a href="#">Home</a>
-					<span>Contact</span>
+					<a href="/">Home</a>
+					<span>{{$menu[0]->nomLien4}}</span>
 				</div>
 			</div>
 		</div>
@@ -73,7 +72,11 @@
 
 
 	<!-- Google map -->
-	<div class="map" id="map-area"></div>
+	<div style="width: 100%">
+        <iframe width="100%" height="600" src="https://maps.google.com/maps?q={{$map[0]->adresse}}&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0"
+            marginwidth="0">
+        </iframe>
+    </div>
 
 
 	<!-- Contact section -->
@@ -83,28 +86,37 @@
 				<!-- contact info -->
 				<div class="col-md-5 col-md-offset-1 contact-info col-push">
 					<div class="section-title left">
-						<h2>Contact us</h2>
+						<h2>{{$contact[0]->titreContact}}</h2>
 					</div>
-					<p>Cras ex mauris, ornare eget pretium sit amet, dignissim et turpis. Nunc nec maximus dui, vel suscipit dolor. Donec elementum velit a orci facilisis rutrum. </p>
-					<h3 class="mt60">Main Office</h3>
-					<p class="con-item">C/ Libertad, 34 <br> 05200 Arévalo </p>
-					<p class="con-item">0034 37483 2445 322</p>
-					<p class="con-item">hello@company.com</p>
+					<p>{{$contact[0]->textContact}}</p>
+					<h3 class="mt60">{{$contact[0]->sousTitreContact}}</h3>
+					<p class="con-item">{{$contact[0]->rueContact}} <br> {{$contact[0]->codePostalContact}} </p>
+					<p class="con-item">{{$contact[0]->telContact}}</p>
+					<p class="con-item">{{$contact[0]->emailContact}}</p>
 				</div>
 				<!-- contact form -->
 				<div class="col-md-6 col-pull">
-					<form class="form-class" id="con_form">
+					<form class="form-class" id="con_form" action='/mailHome' method='POST'>
+					@csrf
 						<div class="row">
 							<div class="col-sm-6">
+							@if(Auth::check() == false)
 								<input type="text" name="name" placeholder="Your name">
+							@elseif(Auth::check())
+								<input type="text" name="name" value='{{auth::user()->name}}'>
+							@endif
 							</div>
 							<div class="col-sm-6">
+							@if(Auth::check() == false)
 								<input type="text" name="email" placeholder="Your email">
+							@elseif(Auth::check())
+								<input type="text" name="email" value='{{auth::user()->email}}'>
+							@endif
 							</div>
 							<div class="col-sm-12">
 								<input type="text" name="subject" placeholder="Subject">
 								<textarea name="message" placeholder="Message"></textarea>
-								<button class="site-btn">send</button>
+								<button class="site-btn">{{$contact[0]->btnContact}}</button>
 							</div>
 						</div>
 					</form>

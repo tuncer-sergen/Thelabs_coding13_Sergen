@@ -17,6 +17,7 @@ class ServiceTitreSeeder extends Seeder
         DB::table('service_titres')->insert(
             [
                 'titre'=>'Get in (the Lab) and see the services',
+                'nomBtn'=>'browse',
             ],
         );
     }

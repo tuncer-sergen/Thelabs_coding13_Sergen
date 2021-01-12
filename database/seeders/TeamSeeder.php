@@ -18,20 +18,20 @@ class TeamSeeder extends Seeder
             [
                 [
                     'imageTeam'=>'1.jpg',
-                    'nomTeam'=>'Christinne',
+                    'nomTeam'=>'Eloise',
                     'prenomTeam'=>'Williams',
                     'posteTeam'=>'Project Manager',
                 ],
                 [
                     'imageTeam'=>'2.jpg',
-                    'nomTeam'=>'Christinne',
-                    'prenomTeam'=>'Williams',
+                    'nomTeam'=>'Jacqueline',
+                    'prenomTeam'=>'Dupont',
                     'posteTeam'=>'Junior Developer',
                 ],
                 [
                     'imageTeam'=>'3.jpg',
-                    'nomTeam'=>'Christinne',
-                    'prenomTeam'=>'Williams',
+                    'nomTeam'=>'Christophe',
+                    'prenomTeam'=>'Wil',
                     'posteTeam'=>'Digital Designer',
                 ],
             ],

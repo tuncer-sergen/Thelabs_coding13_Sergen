@@ -46,10 +46,10 @@
 		<div class="responsive"><i class="fa fa-bars"></i></div>
 		<nav>
 			<ul class="menu-list">
-				<li class="active"><a href="home.html">{{$menu[0]->nomLien1}}</a></li>
-				<li><a href="services.html">{{$menu[0]->nomLien2}}</a></li>
-				<li><a href="blog.html">{{$menu[0]->nomLien3}}</a></li>
-				<li><a href="contact.html">{{$menu[0]->nomLien4}}</a></li>
+				<li class="active"><a href="#">{{$menu[0]->nomLien1}}</a></li>
+				<li><a href="/service">{{$menu[0]->nomLien2}}</a></li>
+				<li><a href="/blog">{{$menu[0]->nomLien3}}</a></li>
+				<li><a href="/contact">{{$menu[0]->nomLien4}}</a></li>
 			</ul>
 		</nav>
 	</header>
@@ -173,7 +173,7 @@
 
 
 	<!-- Services section -->
-	<div class="services-section spad">
+	<div class="services-section spad" id='service'>
 		<div class="container">
 			<div class="section-title dark">
 			<h2>{{$startService}}<span>{{$sliceService}}</span>{{$endService}}</h2>
@@ -194,8 +194,11 @@
 				</div>
 				@endforeach
 			</div>
+			<div class='text-center'>
+				{{  $service->fragment('service')->links('vendor.pagination.bootstrap-4') }}
+			</div>
 			<div class="text-center">
-				<a href="/service" class="site-btn">Services</a>
+				<a href="/service" class="site-btn">{{$serviceTitre[0]->nomBtn}}</a>
 			</div>
 		</div>
 	</div>
@@ -211,7 +214,23 @@
 			</div>
 			<div class="row">
 				<!-- single member -->
-				@foreach($team as $element)
+				@foreach($teamRandom1 as $element)
+				<div class="col-sm-4">
+					<div class="member">
+						<img src="{{asset('img/team/'.$element->imageTeam)}}" alt="">
+						<h2>{{$element->nomTeam}} {{$element->prenomTeam}}</h2>
+						<h3>{{$element->posteTeam}}</h3>
+					</div>
+				</div>
+				@endforeach
+				<div class="col-sm-4">
+					<div class="member">
+						<img src="{{asset('img/team/'.$choix[0]->choix->imageTeam)}}" alt="">
+						<h2>{{$choix[0]->choix->nomTeam}} {{$choix[0]->choix->prenomTeam}}</h2>
+						<h3>{{$choix[0]->choix->posteTeam}}</h3>
+					</div>
+				</div>
+				@foreach($teamRandom2 as $element)
 				<div class="col-sm-4">
 					<div class="member">
 						<img src="{{asset('img/team/'.$element->imageTeam)}}" alt="">
@@ -252,28 +271,37 @@
 				<!-- contact info -->
 				<div class="col-md-5 col-md-offset-1 contact-info col-push">
 					<div class="section-title left">
-						<h2>Contact us</h2>
+						<h2>{{$contact[0]->titreContact}}</h2>
 					</div>
-					<p>Cras ex mauris, ornare eget pretium sit amet, dignissim et turpis. Nunc nec maximus dui, vel suscipit dolor. Donec elementum velit a orci facilisis rutrum. </p>
-					<h3 class="mt60">Main Office</h3>
-					<p class="con-item">C/ Libertad, 34 <br> 05200 Arévalo </p>
-					<p class="con-item">0034 37483 2445 322</p>
-					<p class="con-item">hello@company.com</p>
+					<p>{{$contact[0]->textContact}}</p>
+					<h3 class="mt60">{{$contact[0]->sousTitreContact}}</h3>
+					<p class="con-item">{{$contact[0]->rueContact}} <br> {{$contact[0]->codePostalContact}} </p>
+					<p class="con-item">{{$contact[0]->telContact}}</p>
+					<p class="con-item">{{$contact[0]->emailContact}}</p>
 				</div>
 				<!-- contact form -->
 				<div class="col-md-6 col-pull">
-					<form class="form-class" id="con_form">
+					<form class="form-class" id="con_form" action='/mailHome' method='POST'>
+						@csrf
 						<div class="row">
 							<div class="col-sm-6">
+							@if(Auth::check() == false)
 								<input type="text" name="name" placeholder="Your name">
+							@elseif(Auth::check())
+								<input type="text" name="name" value='{{auth::user()->name}}'>
+							@endif
 							</div>
 							<div class="col-sm-6">
+							@if(Auth::check() == false)
 								<input type="text" name="email" placeholder="Your email">
+							@elseif(Auth::check())
+								<input type="text" name="email" value='{{auth::user()->email}}'>
+							@endif
 							</div>
 							<div class="col-sm-12">
 								<input type="text" name="subject" placeholder="Subject">
 								<textarea name="message" placeholder="Message"></textarea>
-								<button class="site-btn">send</button>
+								<button class="site-btn" type='submit'>{{$contact[0]->btnContact}}</button>
 							</div>
 						</div>
 					</form>

@@ -86,7 +86,9 @@ class TestimonialController extends Controller
     {
         $update = Testimonial::find($id);
         $update->commentaire = $request->commentaire;
+        if($update->image != '01.jpg' && $update->image != '02.jpg' && $update->image !='03.jpg'){
         Storage::disk('public')->delete('img/avatar/'.$update->image);
+        }
         $update->image = $request->file('image')->hashName();
         $update->nom = $request->nom;
         $update->prenom = $request->prenom;

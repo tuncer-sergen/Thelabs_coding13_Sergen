@@ -27,6 +27,15 @@ class DatabaseSeeder extends Seeder
             TeamTitreSeeder::class,
             TeamSeeder::class,
             ReadySeeder::class,
+            ContactHomeSeeder::class,
+            ServicePrimeSeeder::class,
+            ChoixTeamSeeder::class,
+            ContactMapSeeder::class,
+            CategorieSeeder::class,
+            TagSeeder::class,
+            BlogSeeder::class,
+            art_catSeeder::class,
+            art_tagSeeder::class,
         ]);
     }
 }

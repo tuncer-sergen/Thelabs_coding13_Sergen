@@ -270,7 +270,7 @@ return [
                     'url'  => '/testimonial',
                 ],
                 [
-                    'text' => 'Service',
+                    'text' => 'Services',
                     'url'  => '/serviceHome',
                 ],
                 [
@@ -281,8 +281,50 @@ return [
                     'text' => 'Ready',
                     'url'  => '/ready',
                 ],
-            ]
-
+                [
+                    'text' => 'Contact',
+                    'url'  => '/contactHome',
+                ],
+            ],
+            
+        ],
+        [
+            'text' => 'Service',
+            'submenu' =>[
+                [
+                    'text' => 'ServicePrimé',
+                    'url' => '/servicePrime'
+                ],
+            ],
+            
+        ],
+        [
+            'text' => 'Contact',
+            'submenu' =>[
+                [
+                    'text' => 'Maps',
+                    'url' => '/contactMap'
+                ],
+            ],
+            
+        ],
+        [
+            'text' => 'Articles',
+            'submenu' =>[
+                [
+                    'text' => 'blog',
+                    'url' => '/blogAdmin'
+                ],
+                [
+                    'text' => 'tag',
+                    'url' => '/tag'
+                ],
+                [
+                    'text' => 'categorie',
+                    'url' => '/cat'
+                ],
+            ],
+            
         ],
     ],
 

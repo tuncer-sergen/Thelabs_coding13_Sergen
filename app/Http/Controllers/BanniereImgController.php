@@ -77,7 +77,9 @@ class BanniereImgController extends Controller
     public function update($id,Request $request)
     {
         $newEdit = banniereImg::find($id);
+        if($newEdit->image != '01.jpg' && $newEdit->image != '02.jpg'){
         Storage::disk('public')->delete('img/'.$newEdit->image);
+        }
         $newEdit->image = $request->file('image')->hashName();
         $newEdit->save();
         $request->file('image')->storePublicly('img','public');
