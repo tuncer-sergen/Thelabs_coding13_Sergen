@@ -14,29 +14,41 @@ class art_tagSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('art_tags')->insert([
+        DB::table('blog_tag')->insert([
             [
-                'art_id'=>'1',
+                'blog_id'=>'1',
                 'tag_id'=>'1',
             ],
             [
-                'art_id'=>'1',
+                'blog_id'=>'1',
                 'tag_id'=>'2',
             ],
             [
-                'art_id'=>'1',
+                'blog_id'=>'1',
                 'tag_id'=>'5',
             ],
             [
-                'art_id'=>'2',
+                'blog_id'=>'2',
                 'tag_id'=>'3',
             ],
             [
-                'art_id'=>'2',
+                'blog_id'=>'2',
                 'tag_id'=>'4',
             ],
             [
-                'art_id'=>'2',
+                'blog_id'=>'2',
+                'tag_id'=>'6',
+            ],
+            [
+                'blog_id'=>'3',
+                'tag_id'=>'3',
+            ],
+            [
+                'blog_id'=>'3',
+                'tag_id'=>'4',
+            ],
+            [
+                'blog_id'=>'3',
                 'tag_id'=>'6',
             ],
         ]);

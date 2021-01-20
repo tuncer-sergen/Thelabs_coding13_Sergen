@@ -28,6 +28,6 @@ class MailContactHomeSender extends Mailable
      */
     public function build()
     {
-        return $this->from($this->mail->email)->view('Mailing.MailingHome');
+        return $this->from($this->mail->email)->view('Mailing.MailingHome')->with(['mail'=>$this->mail]);
     }
 }

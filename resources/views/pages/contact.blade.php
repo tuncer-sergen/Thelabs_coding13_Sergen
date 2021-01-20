@@ -49,6 +49,23 @@
 				<li><a href="/service">{{$menu[0]->nomLien2}}</a></li>
 				<li><a href="/blog">{{$menu[0]->nomLien3}}</a></li>
 				<li class="active"><a href="#">{{$menu[0]->nomLien4}}</a></li>
+				@if(auth::check() == false)
+				<li><a href="/login">login</a></li>
+				@elseif(auth::check() == true)
+				<li>
+				<a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+					{{ __('Logout') }}
+				</a>
+				<form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+					@csrf
+				</form>
+				</li>
+				@endif
+				@auth
+				@if(auth::user()->role_id == '2' || auth::user()->role_id == '3' || auth::user()->role_id == '4')
+					<li><a href="/home">HomeAdmin</a></li>
+				@endif
+				@endauth
 			</ul>
 		</nav>
 	</header>

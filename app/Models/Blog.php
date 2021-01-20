@@ -9,15 +9,9 @@ class Blog extends Model
 {
     use HasFactory;
     public function tag(){
-        return $this->belongsToMany('App\Models\tag');
+        return $this->belongsToMany(Tag::class);
     }
     public function categorie(){
-        return $this->belongsToMany('App\Models\categorie');
-    }
-    public function art_tag(){
-        return $this->hasMany('App\Models\art_tag','art_id');
-    }
-    public function art_cat(){
-        return $this->hasMany('App\Models\art_cat','art_id');
+        return $this->belongsToMany(Categorie::class);
     }
 }

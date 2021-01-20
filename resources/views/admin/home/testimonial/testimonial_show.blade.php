@@ -20,6 +20,15 @@
     </form>
     <hr>
     <h2><u>rajouter un commentaire</u> :</h2>
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
     <form action="/testimonial" method="post" enctype='multipart/form-data'>
     @csrf
         <div class="card-body d-flex flex-column align-items-center">

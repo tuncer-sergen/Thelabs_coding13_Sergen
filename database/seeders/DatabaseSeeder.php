@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
+            RoleSeeder::class,
             UserSeeder::class,
             MenuSeeder::class,
             BanniereImgSeeder::class,
@@ -36,6 +37,8 @@ class DatabaseSeeder extends Seeder
             BlogSeeder::class,
             art_catSeeder::class,
             art_tagSeeder::class,
+            CommentaireSeeder::class,
+            NewsletterSeeder::class,
         ]);
     }
 }

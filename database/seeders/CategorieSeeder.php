@@ -36,6 +36,21 @@ class CategorieSeeder extends Seeder
             [
                 'categorie' => 'react'
             ],
+            [
+                'categorie' => 'vue.js'
+            ],
+            [
+                'categorie' => 'python'
+            ],
+            [
+                'categorie' => 'ruby'
+            ],
+            [
+                'categorie' => 'c++'
+            ],
+            [
+                'categorie' => 'c#'
+            ],
         ]);
 
     }

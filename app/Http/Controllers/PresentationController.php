@@ -71,6 +71,12 @@ class PresentationController extends Controller
      */
     public function update($id,Request $request)
     {
+        $validated = $request->validate([
+            'titre' => 'required',
+            'text1' => 'required',
+            'text2' => 'required',
+            'nomBoutton' => 'required',
+        ]);
         $newEntry = Presentation::find($id);
         $newEntry->titre = $request->titre;
         $newEntry->text1 = $request->text1;

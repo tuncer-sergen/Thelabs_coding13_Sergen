@@ -40,6 +40,12 @@ class TeamController extends Controller
      */
     public function store(Request $request)
     {
+        $validated = $request->validate([
+            'imageTeam' => 'required',
+            'nomTeam' => 'required',
+            'prenomTeam' => 'required',
+            'posteTeam' => 'required',
+        ]);
         $newEntry = new Team;
         $newEntry->imageTeam = $request->file('imageTeam')->hashName();
         $newEntry->nomTeam = $request->nomTeam;
@@ -83,6 +89,12 @@ class TeamController extends Controller
      */
     public function update($id,Request $request)
     {
+        $validated = $request->validate([
+            'imageTeam' => 'required',
+            'nomTeam' => 'required',
+            'prenomTeam' => 'required',
+            'posteTeam' => 'required',
+        ]);
         $update = Team::find($id);
         if($update->imageTeam != '1.jpg' && $update->imageTeam != '2.jpg' && $update->imageTeam != '3.jpg'){
         Storage::disk('public')->delete('img/team/'.$update->imageTeam);

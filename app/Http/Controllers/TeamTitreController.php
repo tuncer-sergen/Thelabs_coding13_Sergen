@@ -70,6 +70,9 @@ class TeamTitreController extends Controller
      */
     public function update($id,Request $request)
     {
+        $validated = $request->validate([
+            'titre' => 'required',
+        ]);
         $newEntry = TeamTitre::find($id);
         $newEntry->titre = $request->titre;
         $newEntry->save();

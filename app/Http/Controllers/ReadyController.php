@@ -71,6 +71,11 @@ class ReadyController extends Controller
      */
     public function update($id,Request $request)
     {
+        $validated = $request->validate([
+            'readyTitre' => 'required',
+            'readySousTitre' => 'required',
+            'readyBoutton' => 'required',
+        ]);
         $newEntry = Ready::find($id);
         $newEntry->readyTitre = $request->readyTitre;
         $newEntry->readySousTitre = $request->readySousTitre;

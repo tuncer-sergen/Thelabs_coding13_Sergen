@@ -13,11 +13,11 @@
 	<link href="https://fonts.googleapis.com/css?family=Oswald:300,400,500,700|Roboto:300,400,600" rel="stylesheet">
 
 	<!-- Stylesheets -->
-	<link rel="stylesheet" href="css/bootstrap.min.css"/>
-	<link rel="stylesheet" href="css/font-awesome.min.css"/>
-	<link rel="stylesheet" href="css/flaticon.css"/>
-	<link rel="stylesheet" href="css/owl.carousel.css"/>
-	<link rel="stylesheet" href="css/style.css"/>
+	<link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}"/>
+	<link rel="stylesheet" href="{{asset('css/font-awesome.min.css')}}"/>
+	<link rel="stylesheet" href="{{asset('css/flaticon.css')}}"/>
+	<link rel="stylesheet" href="{{asset('css/owl.carousel.css')}}"/>
+	<link rel="stylesheet" href="{{asset('css/style.css')}}"/>
 
 
 	<!--[if lt IE 9]>
@@ -49,6 +49,23 @@
 				<li><a href="/service">{{$menu[0]->nomLien2}}</a></li>
 				<li class="active"><a href="/blog">{{$menu[0]->nomLien3}}</a></li>
 				<li><a href="/contact">{{$menu[0]->nomLien4}}</a></li>
+				@if(auth::check() == false)
+				<li><a href="/login">login</a></li>
+				@elseif(auth::check() == true)
+				<li>
+				<a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+					{{ __('Logout') }}
+				</a>
+				<form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+					@csrf
+				</form>
+				</li>
+				@endif
+				@auth
+				@if(auth::user()->role_id == '2' || auth::user()->role_id == '3' || auth::user()->role_id == '4')
+					<li><a href="/home">HomeAdmin</a></li>
+				@endif
+				@endauth
 			</ul>
 		</nav>
 	</header>
@@ -79,76 +96,83 @@
 					<!-- Single Post -->
 					<div class="single-post">
 						<div class="post-thumbnail">
-							<img src="img/blog/blog-1.jpg" alt="">
+							<img src="{{asset('img/blog/'.$blog->imageBlog)}}" alt="">
 							<div class="post-date">
-								<h2>03</h2>
-								<h3>Nov 2017</h3>
+								<h3>{{$blog->date}}</h3>
 							</div>
 						</div>
 						<div class="post-content">
-							<h2 class="post-title">Just a simple blog post</h2>
+							<h2 class="post-title">{{$blog->titreBlog}}</h2>
 							<div class="post-meta">
-								<a href="">Loredana Papp</a>
-								<a href="">Design, Inspiration</a>
-								<a href="">2 Comments</a>
+							<div>
+								<p><u>tags</u> :</p>
+									@foreach($blog->tag as $item)
+										<a href="">{{$item->tag}}</a>
+									@endforeach
+								</div>
+								<div>
+								<p><u>categorie</u> :</p>
+									@foreach($blog->categorie as $item)
+										<a href="">{{$item->categorie}}</a>
+									@endforeach
+								</div>
+								<div>
+									<p><u>commentaire</u> :</p>
+									<a href="">{{$nbrCom}} Comments</a>
+								</div>
 							</div>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur leo est, feugiat nec elementum id, suscipit id nulla. Phasellus vestibulum, quam tincidunt venenatis ultrices, est libero mattis ante, ac consectetur diam neque eget quam. Etiam feugiat augue et varius blandit. Praesent mattis, eros a sodales commodo.</p>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus vestibulum, quam tincidunt venenatis ultrices, est libero mattis ante, ac consectetur diam neque eget quam. Etiam feugiat augue et varius blandit. Praesent mattis, eros a sodales commodo, justo ipsum rutrum mauris, sit amet egestas metus quam sed dolor. Sed consectetur, dui sed sollicitudin eleifend, arcu neque egestas lectus, sagittis viverra justo massa ut sapien. Aenean viverra ornare mauris eget lobortis. Cras vulputate elementum magna, tincidunt pharetra erat condimentum sit amet. Maecenas vitae ligula pretium, convallis magna eu, ultricies quam. In hac habitasse platea dictumst. </p>
-							<p>Fusce vel tempus nunc. Phasellus et risus eget sapien suscipit efficitur. Suspendisse iaculis purus ornare urna egestas imperdiet. Nulla congue consectetur placerat. Integer sit amet auctor justo. Pellentesque vel congue velit. Sed ullamcorper lacus scelerisque condimentum convallis. Sed ac mollis sem. </p>
+							<p>{{$blog->textBlog}}</p>
 						</div>
 						<!-- Post Author -->
 						<div class="author">
 							<div class="avatar">
-								<img src="img/avatar/03.jpg" alt="">
+								<img src="{{asset('img/avatar/'.$blog->photoProfilAuteur)}}" alt="" height='100px' width='100px'>
 							</div>
 							<div class="author-info">
-								<h2>Lore Williams, <span>Author</span></h2>
-								<p>Vivamus in urna eu enim porttitor consequat. Proin vitae pulvinar libero. Proin ut hendrerit metus. Aliquam erat volutpat. Donec fermen tum convallis ante eget tristique. </p>
+								<h2>{{$blog->auteurBlog}}, Auteur</h2>
+								<p>{{$blog->textAuteur}}</p>
 							</div>
 						</div>
 						<!-- Post Comments -->
 						<div class="comments">
-							<h2>Comments (2)</h2>
+							<h2>Comments ({{$nbrCom}})</h2>
 							<ul class="comment-list">
+							@foreach($com as $element)
+								@if($element->blog_id == $blog->id)
 								<li>
 									<div class="avatar">
-										<img src="img/avatar/01.jpg" alt="">
+										<img src="{{asset('img/avatar/01.jpg')}}" alt="">
 									</div>
 									<div class="commetn-text">
-										<h3>Michael Smith | 03 nov, 2017 | Reply</h3>
-										<p>Vivamus in urna eu enim porttitor consequat. Proin vitae pulvinar libero. Proin ut hendrerit metus. Aliquam erat volutpat. Donec fermen tum convallis ante eget tristique. </p>
+										<h3>{{$element->nom}} | {{$element->date}}</h3>
+										<p>{{$element->com}}</p>
 									</div>
 								</li>
-								<li>
-									<div class="avatar">
-										<img src="img/avatar/02.jpg" alt="">
-									</div>
-									<div class="commetn-text">
-										<h3>Michael Smith | 03 nov, 2017 | Reply</h3>
-										<p>Vivamus in urna eu enim porttitor consequat. Proin vitae pulvinar libero. Proin ut hendrerit metus. Aliquam erat volutpat. Donec fermen tum convallis ante eget tristique. </p>
-									</div>
-								</li>
+								@endif
+							@endforeach
+
 							</ul>
 						</div>
 						<!-- Commert Form -->
 						<div class="row">
 							<div class="col-md-9 comment-from">
 								<h2>Leave a comment</h2>
-								<form class="form-class">
+								@auth()
+								<form class="form-class" action='/commentaire' method='POST'>
+								@csrf
 									<div class="row">
-										<div class="col-sm-6">
-											<input type="text" name="name" placeholder="Your name">
-										</div>
-										<div class="col-sm-6">
-											<input type="text" name="email" placeholder="Your email">
-										</div>
 										<div class="col-sm-12">
-											<input type="text" name="subject" placeholder="Subject">
-											<textarea name="message" placeholder="Message"></textarea>
-											<button class="site-btn">send</button>
+											<textarea name="com" placeholder="Message"></textarea>
+											<input type="text" name='blog_id' style='display:none;' value='{{$blog->id}}'>
+											<button type='submit' class="site-btn">send</button>
 										</div>
 									</div>
 								</form>
+								@endauth
+								@if(auth::check() == false)
+								<p>Connecter vous pour laisser un comme</p>
+								<a href="/login"><button class='btn btn-success'>se connecter</button></a>
+								@endif
 							</div>
 						</div>
 					</div>
@@ -157,34 +181,20 @@
 				<div class="col-md-4 col-sm-5 sidebar">
 					<!-- Single widget -->
 					<div class="widget-item">
-						<form action="#" class="search-form">
-							<input type="text" placeholder="Search">
-							<button class="search-btn"><i class="flaticon-026-search"></i></button>
-						</form>
-					</div>
-					<!-- Single widget -->
-					<div class="widget-item">
 						<h2 class="widget-title">Categories</h2>
 						<ul>
-							<li><a href="#">Vestibulum maximus</a></li>
-							<li><a href="#">Nisi eu lobortis pharetra</a></li>
-							<li><a href="#">Orci quam accumsan </a></li>
-							<li><a href="#">Auguen pharetra massa</a></li>
-							<li><a href="#">Tellus ut nulla</a></li>
-							<li><a href="#">Etiam egestas viverra </a></li>
+							@foreach($catRandom as $element)
+								<li><a href="#">{{$element->categorie}}</a></li>
+							@endforeach						
 						</ul>
 					</div>
 					<!-- Single widget -->
 					<div class="widget-item">
 						<h2 class="widget-title">Tags</h2>
 						<ul class="tag">
-							<li><a href="">branding</a></li>
-							<li><a href="">identity</a></li>
-							<li><a href="">video</a></li>
-							<li><a href="">design</a></li>
-							<li><a href="">inspiration</a></li>
-							<li><a href="">web design</a></li>
-							<li><a href="">photography</a></li>
+							@foreach($tagRandom as $element)
+								<li><a href="">{{$element->tag}}</a></li>
+							@endforeach
 						</ul>
 					</div>
 				</div>
@@ -203,8 +213,18 @@
 				</div>
 				<div class="col-md-9">
 					<!-- newsletter form -->
-					<form class="nl-form">
-						<input type="text" placeholder="Your e-mail here">
+					@if ($errors->any())
+						<div class="alert alert-danger">
+							<ul>
+								@foreach ($errors->all() as $error)
+									<li>{{ $error }}</li>
+								@endforeach
+							</ul>
+						</div>
+					@endif
+					<form class="nl-form" action='/newsLetter' method='POST'>
+					@csrf
+						<input type="text" placeholder="Your e-mail here" name='email'>
 						<button class="site-btn btn-2">Newsletter</button>
 					</form>
 				</div>
@@ -223,8 +243,8 @@
 
 
 	<!--====== Javascripts & Jquery ======-->
-	<script src="js/jquery-2.1.4.min.js"></script>
-	<script src="js/owl.carousel.min.js"></script>
-	<script src="js/main.js"></script>
+	<script src="{{asset('js/jquery-2.1.4.min.js')}}"></script>
+	<script src="{{asset('js/owl.carousel.min.js')}}"></script>
+	<script src="{{asset('js/main.js')}}"></script>
 </body>
 </html>

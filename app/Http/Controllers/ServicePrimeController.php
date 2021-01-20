@@ -71,6 +71,10 @@ class ServicePrimeController extends Controller
      */
     public function update($id,Request $request)
     {
+        $validated = $request->validate([
+            'titreServicePrime' => 'required',
+            'btnServicePrime' => 'required',
+        ]);
         $newEntry = ServicePrime::find($id);
         $newEntry->titreServicePrime = $request->titreServicePrime;
         $newEntry->btnServicePrime = $request->btnServicePrime;

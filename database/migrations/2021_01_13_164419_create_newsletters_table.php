@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateArtTagsTable extends Migration
+class CreateNewslettersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,9 @@ class CreateArtTagsTable extends Migration
      */
     public function up()
     {
-        Schema::create('art_tags', function (Blueprint $table) {
+        Schema::create('newsletters', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('art_id');
-            $table->foreign('art_id')->references('id')->on('blogs');
-            $table->unsignedBigInteger('tag_id');
-            $table->foreign('tag_id')->references('id')->on('tags');
+            $table->string('email');
             $table->timestamps();
         });
     }
@@ -30,6 +27,6 @@ class CreateArtTagsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('art_tags');
+        Schema::dropIfExists('newsletters');
     }
 }

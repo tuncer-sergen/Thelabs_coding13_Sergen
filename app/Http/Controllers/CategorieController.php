@@ -36,6 +36,9 @@ class CategorieController extends Controller
      */
     public function store(Request $request)
     {
+        $validated = $request->validate([
+            'categorie' => 'required',
+        ]);
         $newEntry = new categorie;
         $newEntry->categorie = $request->categorie;
         $newEntry->save();
@@ -74,6 +77,9 @@ class CategorieController extends Controller
      */
     public function update($id,Request $request)
     {
+        $validated = $request->validate([
+            'categorie' => 'required',
+        ]);
         $update = categorie::find($id);
         $update->categorie = $request->categorie;
         $update->save();

@@ -41,6 +41,13 @@ class TestimonialController extends Controller
      */
     public function store(Request $request)
     {
+        $validated = $request->validate([
+            'commentaire' => 'required',
+            'image' => 'required',
+            'nom' => 'required',
+            'prenom' => 'required',
+            'poste' => 'required',
+        ]);
         $newEntry = new Testimonial;
         $newEntry->commentaire = $request->commentaire;
         $newEntry->image = $request->file('image')->hashName(); 
@@ -84,6 +91,13 @@ class TestimonialController extends Controller
      */
     public function update($id,Request $request)
     {
+        $validated = $request->validate([
+            'commentaire' => 'required',
+            'image' => 'required',
+            'nom' => 'required',
+            'prenom' => 'required',
+            'poste' => 'required',
+        ]);
         $update = Testimonial::find($id);
         $update->commentaire = $request->commentaire;
         if($update->image != '01.jpg' && $update->image != '02.jpg' && $update->image !='03.jpg'){

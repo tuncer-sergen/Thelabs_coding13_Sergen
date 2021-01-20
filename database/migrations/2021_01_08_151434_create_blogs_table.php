@@ -23,6 +23,7 @@ class CreateBlogsTable extends Migration
             $table->string('photoProfilAuteur');
             $table->text('textAuteur');
             $table->text('textBlog');
+            $table->boolean('confirmer')->default(false);
             $table->timestamps();
         });
     }

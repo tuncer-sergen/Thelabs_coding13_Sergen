@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateArtCatsTable extends Migration
+class CreateRolesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,9 @@ class CreateArtCatsTable extends Migration
      */
     public function up()
     {
-        Schema::create('art_cats', function (Blueprint $table) {
+        Schema::create('roles', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('art_id');
-            $table->foreign('art_id')->references('id')->on('blogs');
-            $table->unsignedBigInteger('cat_id');
-            $table->foreign('cat_id')->references('id')->on('categories');
+            $table->string('role');
             $table->timestamps();
         });
     }
@@ -30,6 +27,6 @@ class CreateArtCatsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('art_cats');
+        Schema::dropIfExists('roles');
     }
 }

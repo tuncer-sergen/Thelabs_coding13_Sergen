@@ -71,6 +71,12 @@ class MenuController extends Controller
      */
     public function update($id,Request $request)
     {
+        $validated = $request->validate([
+            'nomLien1' => 'required',
+            'nomLien2' => 'required',
+            'nomLien3' => 'required',
+            'nomLien4' => 'required',
+        ]);
         $newEntry = Menu::find($id);
         $newEntry->nomLien1 = $request->nomLien1;
         $newEntry->nomLien2 = $request->nomLien2;

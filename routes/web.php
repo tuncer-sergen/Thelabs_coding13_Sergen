@@ -20,6 +20,10 @@ use App\Http\Controllers\ContactMapController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\CategorieController;
+use App\Http\Controllers\CommentaireController;
+use App\Http\Controllers\NewsletterController;
+
+use Illuminate\Http\Request;
 
 use App\Models\Menu;
 use App\Models\banniereImg;
@@ -40,6 +44,11 @@ use App\Models\ContactMap;
 use App\Models\Blog;
 use App\Models\Tag;
 use App\Models\Categorie;
+use App\Models\Commentaire;
+use App\Models\Newsletter;
+use App\Models\User;
+use App\Models\Role;
+use App\Models\MailContctHome;
 
 /*
 |--------------------------------------------------------------------------
@@ -94,38 +103,38 @@ Route::get('/', function () {
 });
 // Home
     // menu
-Route::resource('menu', MenuController::class);
+Route::resource('menu', MenuController::class)->middleware(['auth','adminWebmaster']);
     // banniere
         // img
-Route::resource('banniereImg', BanniereImgController::class);
+Route::resource('banniereImg', BanniereImgController::class)->middleware(['auth','adminWebmaster']);
         // logo
-Route::resource('banniereLogoSlogan', BanniereLogoSloganController::class);
+Route::resource('banniereLogoSlogan', BanniereLogoSloganController::class)->middleware(['auth','adminWebmaster']);
     // presentation
-Route::resource('presentation', PresentationController::class);
+Route::resource('presentation', PresentationController::class)->middleware(['auth','adminWebmaster']);
     // Video
-Route::resource('video', VideoController::class);
+Route::resource('video', VideoController::class)->middleware(['auth','adminWebmaster']);
     // testimonial
-Route::resource('testimonial', TestimonialController::class);
+Route::resource('testimonial', TestimonialController::class)->middleware(['auth','adminWebmaster']);
     // testimonialTitre
-Route::resource('testimonialTitre', TestimonialTitreController::class);
+Route::resource('testimonialTitre', TestimonialTitreController::class)->middleware(['auth','adminWebmaster']);
     // ServiceHome
-Route::resource('/serviceHome', ServiceController::class);
+Route::resource('/serviceHome', ServiceController::class)->middleware(['auth','adminWebmaster']);
     // ServiceTitreHome
-Route::resource('/serviceTitreHome', ServiceTitreController::class);
+Route::resource('/serviceTitreHome', ServiceTitreController::class)->middleware(['auth','adminWebmaster']);
     // Team
-Route::resource('/team', TeamController::class);
+Route::resource('/team', TeamController::class)->middleware(['auth','adminWebmaster']);
     // choix membre principal
-Route::post('/choix',[TeamController::class,'choix']);
+Route::post('/choix',[TeamController::class,'choix'])->middleware(['auth','adminWebmaster']);
     // TeamTitre
-Route::resource('/teamTitre', TeamTitreController::class);
+Route::resource('/teamTitre', TeamTitreController::class)->middleware(['auth','adminWebmaster']);
     // Ready
-Route::resource('/ready', ReadyController::class);
+Route::resource('/ready', ReadyController::class)->middleware(['auth','adminWebmaster']);
     // ContactHome
-Route::resource('/contactHome', ContactHomeController::class);
+Route::resource('/contactHome', ContactHomeController::class)->middleware(['auth','adminWebmaster']);
 
 // Service
     // ServicePriméTitre
-Route::resource('/servicePrime', ServicePrimeController::class);
+Route::resource('/servicePrime', ServicePrimeController::class)->middleware(['auth','adminWebmaster']);
 
 
 // Service
@@ -134,10 +143,11 @@ Route::get('/service', function () {
     $banniereLogoSlogan = banniereLogoSlogan::all();
     $contact = ContactHome::all();
     $serviceTitre = ServiceTitre::all();
-    $service = Service::orderBy('id','desc')->get();
+    $service = Service::orderBy('id','desc')->paginate(9);
     $servicePrime = ServicePrime::all();
     $servicePrime1 = Service::orderBy('id','desc')->take(3)->get();
     $servicePrime2 = Service::orderBy('id','desc')->skip(3)->take(3)->get();
+    $blog = Blog::orderBy('id','desc')->take(3)->get();
 
     // couleur dans titre Service
     $selectService = $serviceTitre[0]->titre;
@@ -150,7 +160,7 @@ Route::get('/service', function () {
     $endServicePrime = Str::after($selectServicePrime, ')');
     $sliceServicePrime = Str::between($selectServicePrime, '(', ')');
 
-    return view('pages.services',compact('contact','banniereLogoSlogan','menu','startService','endService','sliceService','service','serviceTitre','servicePrime1','servicePrime2','servicePrime','startServicePrime','endServicePrime','sliceServicePrime'));
+    return view('pages.services',compact('contact','banniereLogoSlogan','menu','startService','endService','sliceService','service','serviceTitre','servicePrime1','servicePrime2','servicePrime','startServicePrime','endServicePrime','sliceServicePrime','blog'));
 });
 
 // Blog
@@ -158,21 +168,49 @@ Route::get('/blog', function () {
     $menu = Menu::all();
     $banniereLogoSlogan = banniereLogoSlogan::all();
     $article = Blog::all();
-    return view('pages.blog',compact('menu','banniereLogoSlogan','article'));
+    $tag = Tag::all();
+    $cat = Categorie::all();
+    $tagRandom = Tag::all()->random(9);
+    $catRandom = Categorie::all()->random(6);
+    $com = Commentaire::all();
+
+    return view('pages.blog',compact('menu','banniereLogoSlogan','article','tag','cat','tagRandom','catRandom','com'));
 });
 // Blog Admin
-Route::resource('/blogAdmin', BlogController::class);
+Route::resource('/blogAdmin', BlogController::class)->middleware(['auth','redacteurAdminWebmaster']);
 // Blog Tag
-Route::resource('/tag', TagController::class);
+Route::resource('/tag', TagController::class)->middleware(['auth','redacteurAdminWebmaster']);
 // Blog Categorie
-Route::resource('/cat', CategorieController::class);
+Route::resource('/cat', CategorieController::class)->middleware(['auth','redacteurAdminWebmaster']);
+// BlogAdmin confirme
+Route::get('/confirmeArticle', function () {
+    $datas = Blog::all();
+    $tag = Tag::all();
+    $cat = Categorie::all();
+    return view('admin.blog.articlesConfirmation',compact('datas','tag','cat'));
+})->middleware(['auth','adminWebmaster']);
+// articles accepter
+Route::post('/accepterArticle/{id}',[BlogController::class,'accepter'])->middleware(['auth','adminWebmaster']);
+
 
 // Blog-post
-Route::get('/blog-post', function () {
+
+Route::get('/blog-post/{id}', function ($id) {
     $menu = Menu::all();
     $banniereLogoSlogan = banniereLogoSlogan::all();
-    return view('pages.blog-post',compact('menu','banniereLogoSlogan'));
+    $blog = Blog::find($id);
+    $tag = Tag::all();
+    $cat = Categorie::all();
+    $tagRandom = Tag::all()->random(9);
+    $catRandom = Categorie::all()->random(6);
+    $com = Commentaire::all();
+    $nbrCom = Commentaire::where('blog_id',$blog->id)->count();
+
+    return view('pages.blog-post',compact('menu','banniereLogoSlogan','blog','tag','cat','tagRandom','catRandom','com','nbrCom'));
+
 });
+// commentaire
+Route::resource('/commentaire', CommentaireController::class);
 
 // Contact
 Route::get('/contact', function () {
@@ -185,13 +223,56 @@ Route::get('/contact', function () {
 });
 
 // Contact admin
-Route::resource('/contactMap', ContactMapController::class);
+Route::resource('/contactMap', ContactMapController::class)->middleware(['auth','adminWebmaster']);
+
 
 // mailing
 Route::post('/mailHome', [MailContactHomeController::class,'store']);
+
+// newsletter
+Route::resource('/newsLetter', NewsletterController::class);
+
+// User Admin
+Route::get('/userAdmin', function () {
+    $user = User::all();
+    $team = Team::all();
+    return view('admin.user',compact('user','team'));
+})->middleware(['auth','admin']);
+Route::get('/userAdmin/{id}/edit', function ($id) {
+    $user = User::find($id);
+    $role = Role::all();
+    return view('admin.user_edit',compact('user','role'));
+})->middleware(['auth','admin']);
+Route::post('/userAdmin/{id}', function ($id,Request $request) {
+    $newEntry = User::find($id);
+    $newEntry->role_id = $request->role_id;
+    $newEntry->save();
+    return redirect('/userAdmin');
+})->middleware(['auth','admin']);
+// rajout user vers team
+Route::post('/userTeam/{id}', function ($id) {
+    $userTeam = new Team;
+    $userUser = User::find($id);
+    $userTeam->imageTeam = $userUser->src;
+    $userTeam->nomTeam = $userUser->name;
+    $userTeam->prenomTeam = $userUser->prenom;
+    $userTeam->posteTeam = $userUser->poste;
+    $userTeam->save();
+    return redirect()->back();
+});
+Route::get('/newsletterAdmin', function () {
+    $newsletter = Newsletter::all();
+    return view('admin.newsletter',compact('newsletter'));
+})->middleware(['auth','adminWebmaster']);
+
+// Mail
+Route::get('/mailAdmin', function () {
+    $mail = MailContctHome::all();
+    return view('admin.mail',compact('mail'));
+})->middleware(['auth','adminWebmaster']); 
 
 Auth::routes();
 
 Route::get('/home', function() {
     return view('home');
-})->name('home')->middleware('auth');
+})->name('home')->middleware(['auth','redacteurAdminWebmaster']);

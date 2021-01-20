@@ -238,6 +238,7 @@ return [
         [
             'text' => 'Home',
             'icon' => 'fas fa-fw fa-user',
+            'can' => 'team',
             'submenu' => [
                 [
                     'text' => 'Menu',
@@ -290,6 +291,7 @@ return [
         ],
         [
             'text' => 'Service',
+            'can' => 'team',
             'submenu' =>[
                 [
                     'text' => 'ServicePrimé',
@@ -300,6 +302,7 @@ return [
         ],
         [
             'text' => 'Contact',
+            'can' => 'team',
             'submenu' =>[
                 [
                     'text' => 'Maps',
@@ -323,11 +326,34 @@ return [
                     'text' => 'categorie',
                     'url' => '/cat'
                 ],
+                [
+                    'text' => 'confirmer article',
+                    'url' => '/confirmeArticle',
+                    'can' => 'team',
+                ],
+            ],   
+        ],
+        [
+            'text' => 'User',
+            'can' => 'team',
+            'submenu' =>[
+                [
+                    'text' => 'Users',
+                    'url' => '/userAdmin'
+                ],
+                [
+                    'text' => 'newsLetter',
+                    'url' => '/newsletterAdmin'
+                ],
+                [
+                    'text' => 'Mail',
+                    'url' => '/mailAdmin'
+                ],
             ],
             
         ],
     ],
-
+    
 
     /*
     |--------------------------------------------------------------------------

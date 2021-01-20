@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ContactHome;
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class ContactHomeController extends Controller
 {
@@ -71,6 +72,16 @@ class ContactHomeController extends Controller
      */
     public function update($id,Request $request)
     {
+        $validated = $request->validate([
+            'titreContact' => 'required',
+            'textContact' => 'required',
+            'sousTitreContact' => 'required',
+            'rueContact' => 'required',
+            'codePostalContact' => 'required',
+            'telContact' => 'required',
+            'emailContact' => 'required',
+            'btnContact' => 'required',
+        ]);
         $newEntry = ContactHome::find($id);
         $newEntry->titreContact = $request->titreContact;
         $newEntry->textContact = $request->textContact;

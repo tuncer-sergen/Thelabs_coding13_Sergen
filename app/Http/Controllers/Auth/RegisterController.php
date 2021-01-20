@@ -5,9 +5,12 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use App\Models\Newsletter;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\MailInscription;
 
 class RegisterController extends Controller
 {
@@ -52,6 +55,9 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'prenom' => ['required', 'string', 'max:255'],
+            'poste' => ['required', 'string', 'max:255'],
+            'src' => ['required'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
@@ -64,10 +70,38 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $mail = NewsLetter::all();
+        $index;
+
+        foreach($mail as $element){
+            if($element->email == $data['email']){
+               $index = $element->id; 
+            break;
+            }else{
+                $index = -1;
+            }
+        }
+        if ($mail->count() == 0) {
+            $newEntry = new NewsLetter;
+            $newEntry->email = $data['email'];
+            $newEntry->save();
+        } else if ($index === -1) {
+            $newEntry = new NewsLetter;
+            $newEntry->email = $data['email'];
+            $newEntry->save();
+        }
+
         return User::create([
             'name' => $data['name'],
+            'src' => $data['src']->hashName(),
+            $data['src']->storePublicly('img/avatar/','public'),
+            $data['src']->storePublicly('img/team/','public'),
+            'prenom' => $data['prenom'],
+            'poste' => $data['poste'],
             'email' => $data['email'],
+            'role_id'=>1,
             'password' => Hash::make($data['password']),
-        ]);
+            Mail::to($data['email'])->send(new MailInscription($data)),
+            ]);
     }
 }

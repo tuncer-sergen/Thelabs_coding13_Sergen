@@ -18,9 +18,40 @@ class UserSeeder extends Seeder
         DB::table('users')->insert(
             [
                 [
-                    'name'=>'sergen',
-                    'email'=>'tuncer-sergen@hotmail.com',
-                    'password'=> Hash::make('tuncer-sergen@hotmail.com'),        
+                    'name'=>'admin',
+                    'prenom'=>'admin',
+                    'poste'=>'admin',
+                    'email'=>'admin@admin.com',
+                    'src'=>'01.jpg',
+                    'password'=> Hash::make('admin@admin.com'), 
+                    'role_id'=>'4',
+                ],
+                [
+                    'name'=>'webmaster',
+                    'prenom'=>'webmaster',
+                    'poste'=>'webmaster',
+                    'email'=>'webmaster@webmaster.com',
+                    'src'=>'01.jpg',
+                    'password'=> Hash::make('webmaster@webmaster.com'), 
+                    'role_id'=>'3',
+                ],
+                [
+                    'name'=>'redacteur',
+                    'prenom'=>'redacteur',
+                    'poste'=>'redacteur',
+                    'email'=>'redacteur@redacteur.com',
+                    'src'=>'01.jpg',
+                    'password'=> Hash::make('redacteur@redacteur.com'), 
+                    'role_id'=>'2',
+                ],
+                [
+                    'name'=>'membre',
+                    'prenom'=>'membre',
+                    'poste'=>'membre',
+                    'email'=>'membre@membre.com',
+                    'src'=>'01.jpg',
+                    'password'=> Hash::make('membre@membre.com'), 
+                    'role_id'=>'1',
                 ],
             ],
         );

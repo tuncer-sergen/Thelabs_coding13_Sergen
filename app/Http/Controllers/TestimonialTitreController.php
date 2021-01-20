@@ -70,6 +70,9 @@ class TestimonialTitreController extends Controller
      */
     public function update($id,Request $request)
     {
+        $validated = $request->validate([
+            'titre' => 'required',
+        ]);
         $newEntry = TestimonialTitre::find($id);
         $newEntry->titre = $request->titre;
         $newEntry->save();

@@ -36,6 +36,9 @@ class TagController extends Controller
      */
     public function store(Request $request)
     {
+        $validated = $request->validate([
+            'tag' => 'required',
+        ]);
         $newEntry = new tag;
         $newEntry->tag = $request->tag;
         $newEntry->save();
@@ -74,6 +77,9 @@ class TagController extends Controller
      */
     public function update($id,Request $request)
     {
+        $validated = $request->validate([
+            'tag' => 'required',
+        ]);
         $update = tag::find($id);
         $update->tag = $request->tag;
         $update->save();

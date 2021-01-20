@@ -37,6 +37,9 @@ class BanniereImgController extends Controller
      */
     public function store(Request $request)
     {
+        $validated = $request->validate([
+            'image' => 'required',
+        ]);
         $newEntry = new banniereImg;
         $newEntry->image = $request->file('image')->hashName();
         $newEntry->save();
@@ -76,6 +79,10 @@ class BanniereImgController extends Controller
      */
     public function update($id,Request $request)
     {
+        $validated = $request->validate([
+            'image' => 'required',
+        ]);
+        
         $newEdit = banniereImg::find($id);
         if($newEdit->image != '01.jpg' && $newEdit->image != '02.jpg'){
         Storage::disk('public')->delete('img/'.$newEdit->image);

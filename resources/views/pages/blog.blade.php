@@ -49,6 +49,23 @@
 				<li><a href="/service">{{$menu[0]->nomLien2}}</a></li>
 				<li class="active"><a href="#">{{$menu[0]->nomLien3}}</a></li>
 				<li><a href="/contact">{{$menu[0]->nomLien4}}</a></li>
+				@if(auth::check() == false)
+				<li><a href="/login">login</a></li>
+				@elseif(auth::check() == true)
+				<li>
+				<a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+					{{ __('Logout') }}
+				</a>
+				<form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+					@csrf
+				</form>
+				</li>
+				@endif
+				@auth
+				@if(auth::user()->role_id == '2' || auth::user()->role_id == '3' || auth::user()->role_id == '4')
+					<li><a href="/home">HomeAdmin</a></li>
+				@endif
+				@endauth
 			</ul>
 		</nav>
 	</header>
@@ -78,6 +95,7 @@
 				<div class="col-md-8 col-sm-7 blog-posts">
 					<!-- Post item -->
 					@foreach($article as $element)
+					@if($element->confirmer == true)
 					<div class="post-item">
 						<div class="post-thumbnail">
 							<img src="{{asset('img/blog/'.$element->imageBlog)}}" alt="">
@@ -90,65 +108,53 @@
 							<div class="post-meta">
 								<div>
 								<p><u>tags</u> :</p>
-									@foreach($element->art_tag as $item)
-										<a href="">{{$item->tag->tag}}</a>
+									@foreach($element->tag as $item)
+										<a href="">{{$item->tag}}</a>
 									@endforeach
 								</div>
 								<div>
 								<p><u>categorie</u> :</p>
-									@foreach($element->art_cat as $item)
-										<a href="">{{$item->categorie->categorie}}</a>
+									@foreach($element->categorie as $item)
+										<a href="">{{$item->categorie}}</a>
 									@endforeach
 								</div>
 								<div>
 									<p><u>commentaire</u> :</p>
-									<a href="">2 Comments</a>
+									<div style="display: none;">{{$a=0}}</div>
+
+                                @foreach($com as $elem)
+                                @if ($elem->blog_id == $element->id)
+                                <div style="display: none;">{{$a++}}</div>
+                                @endif
+                                @endforeach
+                                <a href="">{{$a}} Comments</a>
 								</div>
 							</div>
 							<p>{{$element->descriptionBlog}}</p>
-							<a href="/blog-post" class="read-more">Read More</a>
+							<a href="/blog-post/{{$element->id}}" class="read-more">Read More</a>
 						</div>
 					</div>
+					@endif
 					@endforeach
-					<!-- Pagination -->
-					<div class="page-pagination">
-						<a class="active" href="">01.</a>
-						<a href="">02.</a>
-						<a href="">03.</a>
-					</div>
 				</div>
 				<!-- Sidebar area -->
 				<div class="col-md-4 col-sm-5 sidebar">
 					<!-- Single widget -->
 					<div class="widget-item">
-						<form action="#" class="search-form">
-							<input type="text" placeholder="Search">
-							<button class="search-btn"><i class="flaticon-026-search"></i></button>
-						</form>
-					</div>
-					<!-- Single widget -->
-					<div class="widget-item">
 						<h2 class="widget-title">Categories</h2>
 						<ul>
-							<li><a href="#">Vestibulum maximus</a></li>
-							<li><a href="#">Nisi eu lobortis pharetra</a></li>
-							<li><a href="#">Orci quam accumsan </a></li>
-							<li><a href="#">Auguen pharetra massa</a></li>
-							<li><a href="#">Tellus ut nulla</a></li>
-							<li><a href="#">Etiam egestas viverra </a></li>
+						@foreach($catRandom as $element)
+							<li><a href="#">{{$element->categorie}}</a></li>
+						@endforeach
 						</ul>
 					</div>
 					<!-- Single widget -->
 					<div class="widget-item">
 						<h2 class="widget-title">Tags</h2>
 						<ul class="tag">
-							<li><a href="">branding</a></li>
-							<li><a href="">identity</a></li>
-							<li><a href="">video</a></li>
-							<li><a href="">design</a></li>
-							<li><a href="">inspiration</a></li>
-							<li><a href="">web design</a></li>
-							<li><a href="">photography</a></li>
+						@foreach($tagRandom as $element)
+							<li><a href="">{{$element->tag}}</a></li>
+						@endforeach
 						</ul>
 					</div>
 				</div>
@@ -167,8 +173,18 @@
 				</div>
 				<div class="col-md-9">
 					<!-- newsletter form -->
-					<form class="nl-form">
-						<input type="text" placeholder="Your e-mail here">
+					@if ($errors->any())
+						<div class="alert alert-danger">
+							<ul>
+								@foreach ($errors->all() as $error)
+									<li>{{ $error }}</li>
+								@endforeach
+							</ul>
+						</div>
+					@endif
+					<form class="nl-form" action='/newsLetter' method='POST'>
+					@csrf
+						<input type="text" placeholder="Your e-mail here" name='email'>
 						<button class="site-btn btn-2">Newsletter</button>
 					</form>
 				</div>

@@ -34,7 +34,19 @@ class TagSeeder extends Seeder
                 'tag' => 'web design'
             ],
             [
-                'tag' => 'photography'
+                'tag' => 'photo'
+            ],
+            [
+                'tag' => 'discord'
+            ],
+            [
+                'tag' => 'langage'
+            ],
+            [
+                'tag' => 'pc'
+            ],
+            [
+                'tag' => 'food'
             ],
         ]);
 

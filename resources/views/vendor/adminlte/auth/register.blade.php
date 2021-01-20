@@ -14,7 +14,7 @@
 @section('auth_header', __('adminlte::adminlte.register_message'))
 
 @section('auth_body')
-    <form action="{{ $register_url }}" method="post">
+    <form action="{{ $register_url }}" method="post" enctype='multipart/form-data'>
         {{ csrf_field() }}
 
         {{-- Name field --}}
@@ -29,6 +29,54 @@
             @if($errors->has('name'))
                 <div class="invalid-feedback">
                     <strong>{{ $errors->first('name') }}</strong>
+                </div>
+            @endif
+        </div>
+
+        {{-- src field --}}
+        <div class="input-group mb-3">
+            <input type="file" name="src" class="form-control {{ $errors->has('src') ? 'is-invalid' : '' }}"
+                   value="{{ old('src') }}">
+            <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fas fa-image {{ config('adminlte.classes_auth_icon', '') }}"></span>
+                </div>
+            </div>
+            @if($errors->has('src'))
+                <div class="invalid-feedback">
+                    <strong>{{ $errors->first('src') }}</strong>
+                </div>
+            @endif
+        </div>
+
+        {{-- prenom field --}}
+        <div class="input-group mb-3">
+            <input type="text" name="prenom" class="form-control {{ $errors->has('prenom') ? 'is-invalid' : '' }}"
+                   value="{{ old('prenom') }}" placeholder="prenom">
+            <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fas fa-image {{ config('adminlte.classes_auth_icon', '') }}"></span>
+                </div>
+            </div>
+            @if($errors->has('prenom'))
+                <div class="invalid-feedback">
+                    <strong>{{ $errors->first('prenom') }}</strong>
+                </div>
+            @endif
+        </div>
+
+        {{-- poste field --}}
+        <div class="input-group mb-3">
+            <input type="text" name="poste" class="form-control {{ $errors->has('poste') ? 'is-invalid' : '' }}"
+                   value="{{ old('poste') }}" placeholder="poste">
+            <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fas fa-image {{ config('adminlte.classes_auth_icon', '') }}"></span>
+                </div>
+            </div>
+            @if($errors->has('poste'))
+                <div class="invalid-feedback">
+                    <strong>{{ $errors->first('poste') }}</strong>
                 </div>
             @endif
         </div>

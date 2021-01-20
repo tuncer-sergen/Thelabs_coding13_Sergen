@@ -1,0 +1,1 @@
+<p>Un nouvelle article est disponible</p>

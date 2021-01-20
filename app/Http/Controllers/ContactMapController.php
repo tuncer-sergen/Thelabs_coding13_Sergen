@@ -70,6 +70,9 @@ class ContactMapController extends Controller
      */
     public function update($id,Request $request)
     {
+        $validated = $request->validate([
+            'adresse' => 'required',
+        ]);
         $newEntry = ContactMap::find($id);
         $newEntry->adresse = $request->adresse;
         $newEntry->save();

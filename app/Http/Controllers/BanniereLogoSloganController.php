@@ -73,6 +73,10 @@ class BanniereLogoSloganController extends Controller
      */
     public function update($id,Request $request)
     {
+        $validated = $request->validate([
+            'slogan' => 'required',
+            'logo' => 'required',
+        ]);
  
         $newEntry = banniereLogoSlogan::find($id);
         $newEntry->slogan = $request->slogan;

@@ -22,6 +22,15 @@
     </form>
     <hr>
     <h2><u>rajouter un service</u> :</h2>
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
     <form action="/serviceHome" method="post">
     @csrf
         <div class="card-body d-flex flex-column align-items-center">
